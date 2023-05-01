@@ -2,7 +2,6 @@
   "name": "final",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://beatfather.github.io/beattather",
   "dependencies": {
     "@dqbd/tiktoken": "^1.0.7",
     "@testing-library/jest-dom": "^5.16.5",

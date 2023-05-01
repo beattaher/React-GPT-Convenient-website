@@ -39,5 +39,12 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <!-- 加载第三方库的 CDN 链接 -->
+    <% if (htmlWebpackPlugin.options.cdn) { %>
+      <% htmlWebpackPlugin.options.cdn.js.forEach(cdnURL => { %>
+        <script src="<%= cdnURL %>"></script>
+      <% }) %>
+    <% } %>
+
   </body>
 </html>

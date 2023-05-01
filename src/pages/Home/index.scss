@@ -1,0 +1,17 @@
+.home-logo {
+    display: inline-block;
+    background-image: url('~@/assets/home-logo.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    // 设置图像的宽度和高度
+    width: 100px;
+    height: 100px;
+    vertical-align: middle;
+  }
+  
+  .home-text {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+  

@@ -97,6 +97,9 @@ const Home = () => {
         {t('home.thanksMessage')}<br /><br />
         {t('home.author')}<br />
         {t('home.email')}
+        {t('home.wechat')}<br />
+        {t('home.github')}<br />
+        {t('home.copyright')}<br />
       </div>
     </Card>
   );

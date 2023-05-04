@@ -1,6 +1,8 @@
 {
-  "supportedModel": "GPT-3.5-turbo",
-  "errorApiKey": "",
+  "dragger":{
+    "uploadText": "点击或将音频文件拖到此区域进行上传。",
+    "uploadHint": "仅支持单个音频文件上传。"
+  },
   "login": {
     "apiKey": "OpenAI Key",
     "newApiKey": "新OpenAI key",
@@ -8,7 +10,7 @@
     "inputNewApiKey": "请输入新的openAI key",
     "errorApiKey": "请输入你的openAI key",
     "invalidApiKey": "API Key 无效，请重试。",
-    "errorVerifyApiKey": "验证 API Key 时发生错误，请稍后再试。",
+    "validApiKey": "key 有效",
     "errorNetwork": "发生错误，请检查网络连接并稍后再试。",
     "whatIsKey": "Key？啥？",
     "modalTitle": "什么是 OpenAI Key？",
@@ -28,7 +30,9 @@
     "modelDifferenceTitle": "模型的区别",
     "thanksMessage": "首先非常感谢您的使用。由于本人拙劣的编程能力和有限的精力，相信该网站肯定还有许多的缺陷和漏洞。由于目前还没有开发后端部分，再加上openAI严格的api管理规则，我无法公开自己的api，一公开就封我的api。非常抱歉。但是你可以私下找我要一个。但是最好还是自己去买一个，不然容易封号。我相信gpt会掀起新一轮工业革命，这将进一步削减权威，提高生产力，这是激动人心的一刻！希望我能尽绵薄之力参与其中，并帮助更多的人。",
     "author": "作者：吴浩",
-    "email": "邮箱：wuhaodawang87@gmail.com（这是我小时候创建的，我知道这看起来有点二）"
+    "email": "邮箱：wuhaodawang87@gmail.com（这是我小时候创建的，我知道这看起来有点二）",
+    "wechat": "微信: dd15701622127",
+    "github": " Github: https://github.com/beattaher/React-GPT-Convenient-website"
   },
   "layout": {
     "userInfo": {
@@ -67,15 +71,18 @@
       "custom": "自定义"
     },
     "prompt": {
+      "intro": "现在你是一个笔记/会议助手",
       "title": "标题",
       "formType": "这是一个",
       "content": "文本内容",
       "audioText": "音频文本",
       "preferences": "请根据上述内容得出",
       "remarks": "备注",
-      "sayLng": "请给我简体中文的回复。"
+      "sayLng": "请给我简体中文的回复。",
+      "removeClutter": "请把上述信息中的废话（没有有效信息，和主题无关的信息）单独总结到最后，不要写在主干里面。如果没有有效信息，你可以只写废话总结。"
     },
     "contentRulesMessage": "请输入文章内容",
+    "removeClutterButton": "除去废话（实验性功能）",
     "summarizeButton": "汇总"
   }
 }

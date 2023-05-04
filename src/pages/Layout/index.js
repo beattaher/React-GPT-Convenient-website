@@ -9,6 +9,7 @@ import {
   MenuFoldOutlined,
   PieChartOutlined,
   MenuUnfoldOutlined,
+  SafetyCertificateOutlined,
 } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 
@@ -27,7 +28,7 @@ const GeekLayout = () => {
     setCollapsed(!collapsed);
   };
   const { pathname } = useLocation();
-  const { userStore, loginStore, channelStore } = useStore();
+  const { userStore, loginStore, channelStore, apiStore } = useStore();
   //useStore.getUserInfo()
   useEffect(() => {
     userStore.getUserInfo();
@@ -47,7 +48,7 @@ const GeekLayout = () => {
               title={t('layout.userInfo.logoutConfirmation')}
               okText={t('layout.userInfo.logout')}
               cancelText={t('layout.userInfo.cancel')}
-              onConfirm={() => loginStore.logOut()}
+              onConfirm={() => apiStore.removeApiKey()}
             >
               <LogoutOutlined /> {t('layout.userInfo.logout')}
             </Popconfirm>
@@ -71,10 +72,10 @@ const GeekLayout = () => {
             <Menu.Item icon={<HomeOutlined />} key="/">
               <Link to="/">{t('layout.menu.projectDescription')}</Link>
             </Menu.Item>
-            <Menu.Item icon={<DiffOutlined />} key="/noteHelper">
+            <Menu.Item icon={<EditOutlined />} key="/noteHelper">
               <Link to="/noteHelper">{t('layout.menu.noteAssistant')}</Link>
             </Menu.Item>
-            <Menu.Item icon={<EditOutlined />} key="/publish">
+            <Menu.Item icon={<SafetyCertificateOutlined />} key="/publish">
               <Link to="/publish">{t('layout.menu.legalConsultation')}</Link>
             </Menu.Item>
           </Menu>

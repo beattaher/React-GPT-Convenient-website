@@ -36,35 +36,20 @@ function Login() {
     if (!apiKey) {
       return message.error(t("login.errorApiKey"));
     }
+    
+    apiStore.setApiKey(apiKey);
 
-    try {
-      const response = await fetch('https://api.openai.com/v1/engines/text-davinci-003/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          prompt: '测试 API Key...',
-          max_tokens: 5,
-        }),
-      });
 
-      if (response.status === 200) {
+      if (await apiStore.callEngines()) {
         navigate('/')
-        message.success(t('login.validateKey'));
-        apiStore.setApiKey(apiKey);
-        
+        message.success(t('login.validApiKey'));
         console.log(apiStore.apiKey);
-      } else if (response.status === 401) {
+      } else{
         message.error(t('login.invalidApiKey'));
-      } else {
-        message.error(t('login.errorVerifyApiKey'));
+        apiStore.removeApiKey()
       }
-    } catch (error) {
-      message.error(t('login.errorNetwork'));
     }
-  };
+ 
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {

@@ -13,13 +13,14 @@ import {
   Checkbox,
   Row,
 } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
 import { useStore } from '@/store';
 import FormData from 'form-data';
 import './index.scss';
 import { useTranslation } from 'react-i18next';
 import { tokenCounter } from '@/utils'
+
 
 const { Configuration, OpenAIApi } = require('openai');
 const { Title, Paragraph } = Typography;
@@ -38,7 +39,7 @@ const NoteHelper = () => {
   const [progressPercent, setProgressPercent] = useState(0);
   const [preferences, setPreferences] = useState([]);
   const [customContent, setCustomContent] = useState('');
-
+  const [removeClutter, setRemoveClutter] = useState(false);
   
   
 
@@ -59,20 +60,21 @@ const NoteHelper = () => {
       : preferences.join(', ');
     
     if (audioList.length > 0) {
-      const audioFile = audioList[0].originFileObj;
-
+      console.log(audioList[0]);
+      const audioFile = audioList[0];
+    
       const formData = new FormData();
       formData.append('file', audioFile, audioFile.name);
-
+    
       const audioTranscription = await openai.createTranscription(audioFile, 'whisper-1');
       audio_text = audioTranscription.data.text;
-    }else if(!content)
-    {
+    } else if (!content) {
       message.error('请至少输入文本内容或上传音频文件！');
       return;
     }
+    
     setProgressPercent(66);
-    let prompt = '';
+    let prompt = `${t('noteHelper.prompt.intro')} \n`;
     if (title) {
       prompt += `${t('noteHelper.prompt.title')}: ${title}\n`;
     }
@@ -92,9 +94,12 @@ const NoteHelper = () => {
     if (preferredOutput) {
       prompt += `${t('noteHelper.prompt.preferences')}: ${preferredOutput}\n`;
     }
-    if (remarks) {
-      prompt += `${t('noteHelper.prompt.remarks')}: ${remarks}\n`;
+    if (remarks || removeClutter) {
+      const remarksContent = `${removeClutter ? t('noteHelper.prompt.removeClutter') : ''}${remarks ? ' ' + remarks : ''}`;
+      prompt += `${t('noteHelper.prompt.remarks')}: ${remarksContent.trim()}\n`;
     }
+    
+    
     prompt += `${t('noteHelper.prompt.sayLng')}`
     console.log(prompt);
     const promptTokenCount = tokenCounter(prompt);
@@ -112,16 +117,9 @@ const NoteHelper = () => {
       presence_penalty: 0.0,
     });
     */
-    const getResponse = await openai.createChatCompletion({
-      model: "gpt-4",
-      messages: [{role: "user", content: prompt},
-    ],
+    const response = await apiStore.callModel(prompt, apiStore.selectedModel)
     
-    temperature: 0.5,
-    top_p: 0.5,
-    });
-    
-    setResponse(getResponse.data.choices[0].message.content);
+    setResponse(response);
     //setResponse(getResponse.data.choices[0].text); //for text-davinci-003
     setProgressPercent(100);
   };
@@ -134,14 +132,28 @@ const NoteHelper = () => {
 
   const handleUpload = async (file) => {
     const isAudio = file.type.startsWith('audio');
-
-    if (!isAudio) {
-      message.error('请上传音频文件！');
-      return Upload.LIST_IGNORE;
+    
+    if (isAudio && audioList.length < 1) {
+      //console.log(true);
+      return true;
     }
-
-    return true;
+  
+    // 如果文件不是音频格式
+    else if (!isAudio) {
+      message.error('请上传音频文件！');
+      return false;
+    }
+    
+    // 如果已经上传了一个文件
+    else if (audioList.length > 0) {
+      message.warning('仅支持单个音频文件上传。');
+      return false;
+    }
+    
+    
   };
+  
+  
 
   const onChangePreferences = (checkedValues) => {
     setPreferences(checkedValues);
@@ -149,6 +161,13 @@ const NoteHelper = () => {
   const onCustomContentChange = (e) => {
     setCustomContent(e.target.value);
   };
+  // "是否除去废话"状态改变函数
+
+
+  const toggleRemoveClutter = () => {
+    setRemoveClutter(!removeClutter);
+  };
+  
   return (
     <div>
       <Card
@@ -192,23 +211,43 @@ const NoteHelper = () => {
           </Form.Item>
 
           <Form.Item label={t('noteHelper.formLabel.uploadAudio')}>
-            <Upload
+            <Upload.Dragger
               name="audio"
               listType="picture-card"
               className="avatar-uploader"
-              showUploadList
+              showUploadList={{
+                showPreviewIcon: true,
+                showRemoveIcon: true,
+                showDownloadIcon: false,
+              }}
               fileList={audioList}
-              beforeUpload={handleUpload}
+              beforeUpload={(file) => {
+                (async () => {
+                  if (await handleUpload(file)) {
+                    setAudioList([file]);
+                    console.log(await handleUpload(file));
+                  } else {
+
+                    console.log(false, audioList);
+                  }
+                })();
+                return false;
+              }}
+              onRemove={(file) => {
+                // Remove the selected file from the audioList state
+                setAudioList((oldAudioList) => oldAudioList.filter((item) => item.uid !== file.uid));
+              }}
               onPreview={() => {}}
-              onChange={({ fileList }) => setAudioList(fileList)}
+              
             >
-              {audioList.length >= 1 ? null : (
-                <div style={{ marginTop: 8 }}>
-                  <PlusOutlined />
-                </div>
-              )}
-            </Upload>
+              <p className="ant-upload-drag-icon">
+                <InboxOutlined />
+              </p>
+              <p className="ant-upload-text">{t('dragger.uploadText')}</p>
+              <p className="ant-upload-hint">{t('dragger.uploadHint')}</p>
+            </Upload.Dragger>
           </Form.Item>
+          
 
           <Form.Item label={t('noteHelper.formLabel.outputPreferences')}>
             <Checkbox.Group onChange={onChangePreferences}>
@@ -241,6 +280,15 @@ const NoteHelper = () => {
             rules={[{ required: false, message: t('noteHelper.remarksPlaceholder') }]}
           >
             <Input placeholder={t('noteHelper.remarksPlaceholder')} style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              size="large"
+              type={removeClutter ? 'primary' : 'default'}
+              onClick={toggleRemoveClutter}
+            >
+              {t('noteHelper.removeClutterButton')}
+            </Button>
           </Form.Item>
           <Form.Item>
             <Button className="summary" size="large" type="primary" htmlType="submit">

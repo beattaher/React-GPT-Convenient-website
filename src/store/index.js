@@ -2,13 +2,13 @@ import LoginStore from "./login.Store";
 import React from "react";
 import UserStore from "./user.Store";
 import ChannelStore from "./channel.Store";
-import KeyStore from "./key.Store";
+import ApiStore from "./api.Store";
 class RootStore {
   constructor() {
     this.loginStore = new LoginStore();
     this.userStore = new UserStore();
     this.channelStore = new ChannelStore();
-    this.keyStore = new KeyStore();
+    this.apiStore = new ApiStore();
   }
 }
 

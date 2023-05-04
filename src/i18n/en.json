@@ -1,0 +1,88 @@
+{   
+    "supportedModel": "GPT-3.5-turbo",
+    "errorApiKey":"",
+    "login":{
+        "apiKey": "OpenAI Key",
+        "newApiKey": "New OpenAI key",
+        "inputApiKey": "Enter your OpenAI key",
+        "inputNewApiKey": "Enter new OpenAI key",
+        "errorApiKey": "Please enter your OpenAI key",
+        "invalidApiKey": "API Key is Invalid, please try again.",
+        "errorVerifyApiKey": "An error occurred while verifying API Key, please try again later.",
+        "errorNetwork": "An error occurred, please check your network connection and try again later.",
+        "whatIsKey": "Key? What?",
+        "modalTitle": "What is an OpenAI Key?",
+        "modalExplanation": "OpenAI Key is a key to access the OpenAI platform API. In order to use its AI features, you need to have a valid OpenAI Key. To obtain an OpenAI Key, visit [https://beta.openai.com/signup/](https://beta.openai.com/signup/) and create an account. You can find the key in the API Keys section of your OpenAI Dashboard.",
+        "validateKey": "Validate Key"
+    },
+    "home": {
+        "title": "Home",
+        "apiKeyLabel": "Change your OpenAI key",
+        "inputApiKey": "Enter your OpenAI key",
+        "inputNewApiKey": "Enter new OpenAI key",
+        "validateKey": "Validate Key",
+        "saveApiKey": "Save",
+        "changeModel": "Change Text Model",
+        "modelChangeSuccess": "Model changed successfully",
+        "gpt4VerifyError": "Sorry your key doesn't support gpt-4",
+        "modelDifferenceTitle": "Difference between the models",
+        "thanksMessage": 
+            "First of all, thank you very much for your use. Due to my poor programming skills and limited energy, I believe there must be many defects and loopholes in this website. Since there is no backend development at present, coupled with the strict API management rules of openAI, I can't make my API public. Once it is made public, my API will be blocked. I'm sorry. But you can ask me for one privately. However, it's better to buy one yourself, otherwise it's easy to be blocked. I believe GPT will set off a new round of industrial revolution, which will further reduce authority and improve productivity. This is an exciting moment! I hope I can do my best to participate in it and help more people.",
+        "author": "Author: Wu Hao",
+        "email": "Email: wuhaodawang87@gmail.com (This was created when I was a child, I know it looks a bit childish)"
+      }
+      ,
+    
+    "layout": {
+        
+        "userInfo": {
+        "userName": "User Name",
+        "logoutConfirmation": "Are you sure you want to log out?",
+        "logout": "Log Out",
+        "cancel": "Cancel"
+        },
+        "menu": {
+        "projectDescription": "Project Description",
+        "noteAssistant": "Note Assistant",
+        "legalConsultation": "Legal Consultation (Under Development)"
+        }
+    },
+    "noteHelper": {
+        "breadcrumb": {
+          "home": "Home",
+          "noteAssistant": "Note Assistant"
+        },
+        "resultTitle": "Result display area:",
+        "cardTitle": "Topic",
+        "formLabel": {
+          "title": "Title",
+          "formType": "Form Type",
+          "uploadAudio": "Upload Audio",
+          "outputPreferences": "Output Preferences",
+          "textContent": "Text Content",
+          "remarks": "Remarks"
+        },
+        "titlePlaceholder": "What is this about?",
+        "formTypePlaceholder": "What is it? Article? Meeting? Class?",
+        "remarksPlaceholder": "Anything you want to add",
+        "preferencesOptions": {
+          "summary": "Summary",
+          "outline": "Outline",
+          "custom": "Custom"
+        },
+        "prompt": {
+            "title": "Title",
+            "formType": "it is",
+            "content": "text Content",
+            "audioText": "Audio Text",
+            "preferences": "Based on the above content, output",
+            "remarks": "remarks",
+            "sayLng":"Please reply me in English."
+          },
+        "contentRulesMessage": "Please enter article content",
+        "summarizeButton": "Summarize"
+      }
+    
+      
+  }
+  

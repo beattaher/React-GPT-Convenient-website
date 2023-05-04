@@ -1,113 +1,122 @@
-
-import logo from '@/assets/logo.png'
-import './index.scss'
-import { Card,Button, Checkbox, Form, Input, message   } from 'antd';
-import {useStore} from '@/store'
+import './index.scss';
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  message,
+  Modal,
+  Space,
+} from 'antd';
+import { useStore } from '@/store';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 function Login() {
-  const {loginStore} = useStore()
-  const navigate = useNavigate()
   
-  async function onFinish (values) {
-    try {
-      await loginStore.getToken({
-        mobile: values.username,
-        code: values.password
-      })
-      navigate('/')
-      message.success('登录成功')
-    }catch (err) {
-      console.log(err)
-      message.error('登录失败')
+  const [form] = Form.useForm();
+  const { apiStore } = useStore();
+  const navigate = useNavigate();
+
+  const hasApiKey = !!apiStore.apiKey;
+  
+  const { t ,ready} = useTranslation();
+
+  
+
+  const apiKeyLabel = hasApiKey ? t("login.newApiKey") : t("login.apiKey");
+  const apiKeyPlaceholder = hasApiKey
+    ? t("login.inputNewApiKey")
+    : t("login.inputApiKey");
+
+  const handleSubmit = async (values) => {
+    const apiKey = values.title;
+
+    if (!apiKey) {
+      return message.error(t("login.errorApiKey"));
     }
-  }
-  async function onLogOut () {
+
     try {
-      await loginStore.logOut()
-      navigate('/login')
-      message.success('退出成功')
-    }catch (err) {
-      console.log(err)
-      message.error('退出失败')
-    }  
+      const response = await fetch('https://api.openai.com/v1/engines/text-davinci-003/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          prompt: '测试 API Key...',
+          max_tokens: 5,
+        }),
+      });
+
+      if (response.status === 200) {
+        navigate('/')
+        message.success(t('login.validateKey'));
+        apiStore.setApiKey(apiKey);
+        
+        console.log(apiStore.apiKey);
+      } else if (response.status === 401) {
+        message.error(t('login.invalidApiKey'));
+      } else {
+        message.error(t('login.errorVerifyApiKey'));
+      }
+    } catch (error) {
+      message.error(t('login.errorNetwork'));
+    }
   };
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
   return (
     <div className="login">
       <Card className="login-container">
-        <img className="login-logo" src={logo} alt="" />
-        <div className="App">
-        <Form
-          name="basic"
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          labelCol={{
-            span: 2,
-          }}
+      <Form form={form} initialValues={{ title: '' }} onFinish={handleSubmit}>
+        <Form.Item>
+          <div className = "company_name"/>
+        </Form.Item>
           
-          style={{
-            maxWidth: 600,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          
-          autoComplete="off"
-        >
-          <Form.Item
-          initialValue="18883716551"
-          name="username"
-          rules ={[{
+            
+        <Form.Item label={apiKeyLabel}>
+            <Space>
+              <Form.Item
+                name="title"
+                rules={[{ required: true, message: t('login.errorApiKey') }]}
+              >
+                <Input className="key_input" placeholder={apiKeyPlaceholder} />
+              </Form.Item>
+              <Form.Item>
+                <Button className="what_key_link" type="link" onClick={showModal}>
+                {t("login.whatIsKey")}
+              </Button>
+              </Form.Item>
               
-            required: true,
-            message: 'Please input your username!',
-          
-        }]}>
-            <Input size="large" placeholder= 'Please input your username!' />
-          </Form.Item>
-
-          <Form.Item
-            name="password"
-            initialValue="246810"
-            rules ={[{
-              
-                required: true,
-                message: 'Please input your password!',
-              
-            }]}
-          >
-            <Input size="large" placeholder= 'Please input your password!'  />
-          </Form.Item>
-
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{
-              style: { display: 'flex', justifyContent: 'center' } // 新增样式
-            }}
-          >
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
-          <Form.Item
-            wrapperCol={{
-              
-              style: { display: 'flex', justifyContent: 'center' } // 新增样式
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              Submit
+            </Space>
+            <Modal title={t("login.modalTitle")} visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+              <p>{t("login.modalExplanation")}</p>
+            </Modal>
+          </Form.Item> 
+          <Form.Item>
+            <Button
+              className="verify_key"
+              type="primary"
+              htmlType="submit"
+            >
+              {t("login.validateKey")}
             </Button>
           </Form.Item>
         </Form>
-      
-        
-      </div>
       </Card>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

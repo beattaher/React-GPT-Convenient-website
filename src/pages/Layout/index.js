@@ -1,45 +1,67 @@
-import { Layout, Menu, Popconfirm} from 'antd'
+import { Layout, Menu, Popconfirm, Button } from 'antd';
 import {
   HomeOutlined,
   DiffOutlined,
   EditOutlined,
-  LogoutOutlined
-} from '@ant-design/icons'
-import {observer } from 'mobx-react-lite'
-import './index.scss'
-import { Outlet, Link, useLocation, useNavigate} from 'react-router-dom'
-import {useStore} from '@/store'
-import { useEffect } from 'react'
+  LogoutOutlined,
+  AppstoreOutlined,
+  ContainerOutlined,
+  MenuFoldOutlined,
+  PieChartOutlined,
+  MenuUnfoldOutlined,
+} from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
-const { Header, Sider } = Layout
+import { observer } from 'mobx-react-lite';
+import './index.scss';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { useStore } from '@/store';
+import { useEffect, useState } from 'react';
+
+const { Header, Sider } = Layout;
 
 const GeekLayout = () => {
-
-  const {pathname} = useLocation()
-  const {userStore,loginStore, channelStore} = useStore()
+  const { t } = useTranslation();
+  const [collapsed, setCollapsed] = useState(false);
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+  const { pathname } = useLocation();
+  const { userStore, loginStore, channelStore } = useStore();
   //useStore.getUserInfo()
   useEffect(() => {
-    userStore.getUserInfo()
-    channelStore.loadChannelList()
-  },[userStore,channelStore])
-  const navigate = useNavigate()
+    userStore.getUserInfo();
+    channelStore.loadChannelList();
+  }, [userStore, channelStore]);
+  const navigate = useNavigate();
 
   return (
     <Layout>
       <Header className="header">
         <div className="logo" />
-        <div className = "company_name"/>
+        <div className="company_name"/>
         <div className="user-info">
-          <span className="user-name">{userStore.name}</span>
+          <span className="user-name">{t('layout.userInfo.userName')}</span>
           <span className="user-logout">
-            <Popconfirm title="是否确认退出？" okText="退出" cancelText="取消" onConfirm={()=>loginStore.logOut()}> 
-              <LogoutOutlined /> 退出
+            <Popconfirm
+              title={t('layout.userInfo.logoutConfirmation')}
+              okText={t('layout.userInfo.logout')}
+              cancelText={t('layout.userInfo.cancel')}
+              onConfirm={() => loginStore.logOut()}
+            >
+              <LogoutOutlined /> {t('layout.userInfo.logout')}
             </Popconfirm>
           </span>
         </div>
       </Header>
       <Layout>
-        <Sider width={200} className="site-layout-background">
+        <Sider
+          width={200}
+          className="site-layout-background"
+          collapsible
+          collapsed={collapsed}
+          onCollapse={toggleCollapsed}
+        >
           <Menu
             mode="inline"
             theme="dark"
@@ -47,25 +69,22 @@ const GeekLayout = () => {
             style={{ height: '100%', borderRight: 0 }}
           >
             <Menu.Item icon={<HomeOutlined />} key="/">
-                <Link to='/'> 项目说明</Link>
-              
+              <Link to="/">{t('layout.menu.projectDescription')}</Link>
             </Menu.Item>
-            <Menu.Item icon={<DiffOutlined />} key="/article">
-                <Link to='/article'> 笔记助手</Link>
-              
+            <Menu.Item icon={<DiffOutlined />} key="/noteHelper">
+              <Link to="/noteHelper">{t('layout.menu.noteAssistant')}</Link>
             </Menu.Item>
             <Menu.Item icon={<EditOutlined />} key="/publish">
-                <Link to='/publish'> 法律咨询（开发中）</Link>   
-              
+              <Link to="/publish">{t('layout.menu.legalConsultation')}</Link>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout className="layout-content" style={{ padding: 20 }}>
-            <Outlet />
+          <Outlet />
         </Layout>
       </Layout>
     </Layout>
-  )
-}
+  );
+};
 
-export default observer(GeekLayout)
+export default observer(GeekLayout);

@@ -1,16 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import './index.scss';
 import App from './App';
 import 'antd/dist/reset.css';
-// 再导入全局样式文件，防止样式覆盖！
-import './index.scss'
+// 导入 i18n 配置
+import './i18n';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  
-    <App />
-  
-);
+const rootElement = document.getElementById('root');
+
+if (rootElement) {
+    const root = createRoot(rootElement);
+    root.render(<App />);
+}
+
 
 

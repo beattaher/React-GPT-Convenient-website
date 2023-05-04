@@ -1,87 +1,106 @@
 import React, { useState } from 'react';
 import './index.scss';
-import { Bar } from '@/components/Bar';
-import { Card, Breadcrumb, Form, Input, Upload, Button, message } from 'antd';
+import { Card, Form, Input, Button, message, Radio, Popover } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons'; // 导入 QuestionCircleOutlined 图标
 import { useStore } from '@/store';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
   const [form] = Form.useForm();
-  const { keyStore } = useStore();
+  const { apiStore } = useStore();
+  const { t, ready } = useTranslation();
+  const [selectedModel, setSelectedModel] = useState(apiStore.getSelectedModel());
 
   // 判断是否已经存有 key
-  const hasApiKey = !!keyStore.apiKey;
-  const apiKeyLabel = hasApiKey ? "更改你的openAI key" : "你的openAI key";
-  const apiKeyPlaceholder = hasApiKey ? "请输入新的openAI key" : "请输入你的openAI key";
+  const hasApiKey = !!apiStore.apiKey;
+  const apiKeyLabel = hasApiKey ? t('login.inputNewApiKey') : t('login.inputApiKey');
+  const apiKeyPlaceholder = hasApiKey ? t('login.inputNewApiKey') : t('login.inputApiKey');
 
-  const handleSubmit = async (values) => {
-    const apiKey = values.title;
+  
 
-    if (!apiKey) {
-      return message.error('请输入你的openAI key');
-    }
-
-    // 验证Key是否有效
-    try {
-      const response = await fetch('https://api.openai.com/v1/engines/text-davinci-003/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          prompt: '测试 API Key...',
-          max_tokens: 5,
-        }),
-      });
-
-      if (response.status === 200) {
-        message.success('API Key 验证成功！');
-        // Save the validated API key in the KeyStore
-        console.log(apiKey);
-        keyStore.setApiKey(apiKey);
-        
-        console.log(keyStore.apiKey);
-      } else if (response.status === 401) {
-        message.error('API Key 无效，请重试。');
+  const handleModelChange = async (e) => {
+    const model = e.target.value;
+    if (model === 'gpt-4') {
+      const apiKey = form.getFieldValue('title');
+      const isValid = await apiStore.callGPT();
+      if (isValid) {
+        message.success(t('home.modelChangeSuccess'));
+        setSelectedModel(model);
+        apiStore.setSelectedModel(model);
       } else {
-        message.error('验证 API Key 时发生错误，请稍后再试。');
+        message.error(t('home.gpt4VerifyError'));
       }
-    } catch (error) {
-      message.error('发生错误，请检查网络连接并稍后再试。');
+    } else {
+      setSelectedModel(model);
+      apiStore.setSelectedModel(model);
+      message.success(t('home.modelChangeSuccess'));
     }
   };
 
+  const handleApikeySubmit = async (values) => {
+    const apiKey = values.title;
+
+    if (!apiKey) {
+      return message.error(t('errorApiKey'));
+    }
+
+    // Save the validated API key in the apiStore
+    console.log(apiKey);
+    apiStore.setApiKey(apiKey);
+  };
+
+  const modelDifference = ( // 定义三个模型之间的区别
+    <div>
+      <p><strong>GPT-3.5-turbo:</strong> 较新的版本，性能与 Text-davinci-003 接近，但成本更低。</p>
+      <p><strong>Text-davinci-003:</strong> 高性能，适用于各种任务，但价格较高。</p>
+      <p><strong>GPT-4:</strong> 最新、最强大的版本。需要特殊 API Key，可能不适用于所有用户。</p>
+    </div>
+  );
+
   return (
     <Card
-      title=  
-          '首页'
+      title={t('home.title')}
     >
-      <Form form={form} initialValues={{ title: '' }} onFinish={handleSubmit}>
+      {/* 设置 initialValues 中的 model 为 selectedModel */}
+      <Form form={form} initialValues={{ title: '', model: selectedModel }} onFinish={handleApikeySubmit}>
         <Form.Item
           label={apiKeyLabel}
           name="title"
-          rules={[{ required: true, message: '请输入你的openAI key' }]}
+          rules={[{ required: true, message: t('login.errorApiKey') }]}
         >
-          <Input placeholder={apiKeyPlaceholder} style={{ width: 400 }} />
+          <Input placeholder={apiKeyPlaceholder} style={{ width: '100%' }} />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            验证Key
+            {t('home.saveApiKey')}
           </Button>
         </Form.Item>
+        <Form.Item
+        name="model"
+        label={t('home.changeModel')}
+      >
+        <Radio.Group onChange={handleModelChange} value={selectedModel}>
+          <Radio value="gpt-3.5-turbo">GPT-3.5-turbo</Radio>
+          <Radio value="text-davinci-003">Text-davinci-003</Radio>
+          <Radio value="gpt-4">GPT-4</Radio>
+        </Radio.Group>
+        <Popover content={modelDifference} title={t('home.modelDifferenceTitle')}>
+          <QuestionCircleOutlined style={{ marginLeft: '8px' }} />
+        </Popover>
+      </Form.Item>
+        
       </Form>
       <div className="home-logo" />
+      <div />
+
       <div>
-        首先非常感谢您的使用。由于本人拙劣的编程能力和有限的精力，相信该网站肯定还有许多的缺陷和漏洞。由于目前还没有开发后端部分，再加上openAI严格的api管理规则，我无法公开自己的api，一公开就封我的api。非常抱歉。但是你可以私下找我要一个。但是最好还是自己去买一个，不然容易封号。<br />
-        我相信gpt会掀起新一轮工业革命，这将进一步削减权威，提高生产力，这是激动人心的一刻！希望我能尽绵薄之力参与其中，并帮助更多的人。<br /><br />
-        作者：吴浩<br />
-        邮箱：wuhaodawang87@gmail.com（这是我小时候创建的，我知道这看起来有点2）
-        
-        
+        {t('home.thanksMessage')}<br /><br />
+        {t('home.author')}<br />
+        {t('home.email')}
       </div>
-      
     </Card>
   );
 };
 
 export default Home;
+

@@ -1,0 +1,35 @@
+.NoteHelper {
+    .ql-editor {
+      min-height: 200px;
+    }
+
+    
+}
+  .summary {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .progress_circle{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  // 应用到<Breadcrumb>上的新类名
+  .breadcrumb-container {
+    position: relative; // 设置为relative，以便子元素使用absolute定位
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .advanced-options {
+    position: absolute;
+    right: 0;
+    z-index: 2; // 添加这一行以确保按钮位于ant-card-head之上
+  }
+  
+  
+  

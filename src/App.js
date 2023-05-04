@@ -6,9 +6,9 @@ import Login from "@/pages/Login";
 import { Button, Checkbox, Form, Input } from 'antd';
 import { AuthComponent } from '@/components/AuthComponent';
 import { lazy, Suspense } from 'react';
-
+import './i18n'
 const Publish = lazy(() => import('@/pages/Publish'));
-const Article = lazy(() => import('@/pages/Article'));
+const NoteHelper = lazy(() => import('@/pages/NoteHelper'));
 const Home = lazy(() => import('@/pages/Home'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
@@ -23,7 +23,7 @@ function App() {
             </AuthComponent>
           }>
             <Route index element={<Home />} />
-            <Route path="article" element={<Article />} />
+            <Route path="noteHelper" element={<NoteHelper />} />
             <Route path="publish" element={<Publish />} />
           </Route>
           <Route path="/login" element={<Login />} />

@@ -1,0 +1,83 @@
+{
+  "supportedModel": "GPT-3.5-turbo",
+  "errorApiKey": "",
+  "login": {
+    "apiKey": "OpenAI Key",
+    "newApiKey": "新OpenAI key",
+    "inputApiKey": "请输入你的openAI key",
+    "inputNewApiKey": "请输入新的openAI key",
+    "errorApiKey": "请输入你的openAI key",
+    "invalidApiKey": "API Key 无效，请重试。",
+    "errorVerifyApiKey": "验证 API Key 时发生错误，请稍后再试。",
+    "errorNetwork": "发生错误，请检查网络连接并稍后再试。",
+    "whatIsKey": "Key？啥？",
+    "modalTitle": "什么是 OpenAI Key？",
+    "modalExplanation": "OpenAI Key 是用于访问 OpenAI 平台 API 的键。要使用其 AI 功能，您需要有效的 OpenAI Key。如需获取 OpenAI Key，请访问 [https://beta.openai.com/signup/](https://beta.openai.com/signup/) 并创建账户。您可以在 OpenAI 控制面板的 API Keys 部分找到密钥。",
+    "validateKey": "验证Key"
+  },
+  "home": {
+    "title": "首页",
+    "apiKeyLabel": "更改你的openAI key",
+    "inputApiKey": "请输入你的openAI key",
+    "inputNewApiKey": "请输入新的openAI key",
+    "validateKey": "验证Key",
+    "saveApiKey": "保存",
+    "changeModel": "更改文本模型",
+    "modelChangeSuccess": "模型更改成功",
+    "gpt4VerifyError": "抱歉，您的密钥不支持gpt-4",
+    "modelDifferenceTitle": "模型的区别",
+    "thanksMessage": "首先非常感谢您的使用。由于本人拙劣的编程能力和有限的精力，相信该网站肯定还有许多的缺陷和漏洞。由于目前还没有开发后端部分，再加上openAI严格的api管理规则，我无法公开自己的api，一公开就封我的api。非常抱歉。但是你可以私下找我要一个。但是最好还是自己去买一个，不然容易封号。我相信gpt会掀起新一轮工业革命，这将进一步削减权威，提高生产力，这是激动人心的一刻！希望我能尽绵薄之力参与其中，并帮助更多的人。",
+    "author": "作者：吴浩",
+    "email": "邮箱：wuhaodawang87@gmail.com（这是我小时候创建的，我知道这看起来有点二）"
+  },
+  "layout": {
+    "userInfo": {
+      "userName": "用户名",
+      "logoutConfirmation": "是否确认退出？",
+      "logout": "退出",
+      "cancel": "取消"
+    },
+    "menu": {
+      "projectDescription": "项目说明",
+      "noteAssistant": "笔记助手",
+      "legalConsultation": "法律咨询（开发中）"
+    }
+  },
+  "noteHelper": {
+    "breadcrumb": {
+      "home": "首页",
+      "noteAssistant": "笔记助手"
+    },
+    "resultTitle": "结果显示处：",
+    "cardTitle": "主题",
+    "formLabel": {
+      "title": "主题",
+      "formType": "形式",
+      "uploadAudio": "上传音频",
+      "outputPreferences": "输出偏好",
+      "textContent": "文字内容",
+      "remarks": "备注"
+    },
+    "titlePlaceholder": "这是关于什么？",
+    "formTypePlaceholder": "这是什么？文章？会议？课程？",
+    "remarksPlaceholder": "任何您想要补充的",
+    "preferencesOptions": {
+      "summary": "总结",
+      "outline": "大纲",
+      "custom": "自定义"
+    },
+    "prompt": {
+      "title": "标题",
+      "formType": "这是一个",
+      "content": "文本内容",
+      "audioText": "音频文本",
+      "preferences": "请根据上述内容得出",
+      "remarks": "备注",
+      "sayLng": "请给我简体中文的回复。"
+    },
+    "contentRulesMessage": "请输入文章内容",
+    "summarizeButton": "汇总"
+  }
+}
+
+  

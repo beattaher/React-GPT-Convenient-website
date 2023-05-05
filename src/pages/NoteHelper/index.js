@@ -53,11 +53,16 @@ const NoteHelper = () => {
     
     delete configuration.baseOptions.headers['User-Agent'];
     const openai = new OpenAIApi(configuration);
-    
+  
     let audio_text = '';
-    const preferredOutput = preferences.includes(t('noteHelper.preferencesOptions.custom'))
-      ? preferences.join(', ') + ': ' + customContent
+  
+    const hasCustomContent = customContent.trim() !== '';
+    const otherPreferences = preferences.filter(option => option !== t('custom'));
+    console.log(customContent);
+    const preferredOutput = hasCustomContent
+      ? (otherPreferences.length > 0 ? otherPreferences.join(', ') + ', ' : '') + customContent
       : preferences.join(', ');
+  
     
     if (audioList.length > 0) {
       console.log(audioList[0]);
@@ -259,12 +264,12 @@ const NoteHelper = () => {
               <Row>
                 <Checkbox value={t('noteHelper.preferencesOptions.summary')}>{t('noteHelper.preferencesOptions.summary')}</Checkbox>
                 <Checkbox value={t('noteHelper.preferencesOptions.outline')}>{t('noteHelper.preferencesOptions.outline')}</Checkbox>
-                <Checkbox value={t('noteHelper.preferencesOptions.custom')}>{t('noteHelper.preferencesOptions.custom')}</Checkbox>
+                <Checkbox value={t('custom')}>{t('custom')}</Checkbox>
               </Row>
             </Checkbox.Group>
-            {preferences.includes(t('noteHelper.preferencesOptions.custom')) && (
+            {preferences.includes(t('custom')) && (
               <Input
-                placeholder="请输入自定义内容"
+                placeholder= {t("customPlaceholder")}
                 style={{ width: '100%', marginTop: 8 }}
                 value={customContent}
                 onChange={onCustomContentChange}

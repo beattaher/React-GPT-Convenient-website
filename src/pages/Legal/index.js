@@ -55,19 +55,24 @@ const Legal = () => {
   const [progressPercent, setProgressPercent] = useState(0);
   const [preferences, setPreferences] = useState([]);
   const [customContent, setCustomContent] = useState('');
+  const [form] = Form.useForm();
   const [country, setCountry] = useState();
 
   useEffect(() => {
     // 假设您已经有了这个 Promise
     const countryPromise = Promise.resolve('United States');
-
+  
     const fetchCountryName = async () => {
       const result = await countryPromise;
       setCountry(result);
+  
+      // 使用 setFieldsValue 设置国家输入框的初始值
+      form.setFieldsValue({ defCountry: result });
     };
-
+  
     fetchCountryName();
   }, []);
+  
   
 
   console.log(country);
@@ -89,10 +94,14 @@ const Legal = () => {
     const openai = new OpenAIApi(configuration);
     
     let audio_text = '';
-    const extraOutput = preferences.includes(t('legal.extraOptions.custom'))
-      ? preferences.join(', ') + ': ' + customContent
+    const hasCustomContent = customContent.trim() !== '';
+    const otherPreferences = preferences.filter(option => option !== t('custom'));
+    console.log(customContent);
+    const extraOutput = hasCustomContent
+      ? (otherPreferences.length > 0 ? otherPreferences.join(', ') + ', ' : '') + customContent
       : preferences.join(', ');
     
+      
     if (audioList.length > 0) {
       console.log(audioList[0]);
       const audioFile = audioList[0];
@@ -209,7 +218,7 @@ const Legal = () => {
         </Space>
       </Card>
       <Card>
-        <Form initialValues={{ content: '' }} onFinish={handleSubmit}>
+        <Form form={form} initialValues={{ content: '' }} onFinish={handleSubmit}>
           
   
           <Form.Item label={t('legal.extra')}>
@@ -218,25 +227,20 @@ const Legal = () => {
                 <Checkbox value={t('legal.extraOptions.relevantCase')}>{t('legal.extraOptions.relevantCase')}</Checkbox>
                 <Checkbox value={t('legal.extraOptions.method')}>{t('legal.extraOptions.method')}</Checkbox>
                 <Checkbox value={t('legal.extraOptions.result')}>{t('legal.extraOptions.result')}</Checkbox>
-                <Checkbox value={t('legal.extraOptions.custom')}>{t('legal.extraOptions.custom')}</Checkbox>
+                <Checkbox value={t('custom')}>{t('custom')}</Checkbox>
               </Row>
             </Checkbox.Group>
-            {preferences.includes(t('legal.extraOptions.custom')) && (
-              
-              <Form.Item label={t('legal.country')} name="country">
-                <Input
-                  placeholder={t('legal.countryPlaceholder')}
-                  
-                  defaultValue={country}
-                  onChange={handleCountryChange}
-                  name="country"
-                />
-              </Form.Item>
-              
+            {preferences.includes(t('custom')) && (
+              <Input
+                placeholder= {t("customPlaceholder")}
+                style={{ width: '100%', marginTop: 8 }}
+                value={customContent}
+                onChange={onCustomContentChange}
+              />
             )}
           </Form.Item>
   
-          <Form.Item label={t('legal.country')} name="country">
+          <Form.Item label={t('legal.country')} name="defCountry">
             <Input
               placeholder={t('legal.countryPlaceholder')}
               value={country}

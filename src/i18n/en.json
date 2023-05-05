@@ -5,6 +5,8 @@
   "remarks": "Remarks",
   "remarksPlaceholder": "Anything you'd like to add",
   "resultTitle": "Result display area:",
+  "custom": "Custom",
+  "customPlaceholder": "Please enter anything you would like to add",
   "dragger": {
     "uploadText": "Click or drag an audio file to this area to upload.",
     "uploadHint": "Support for single audio file upload only."
@@ -107,8 +109,7 @@
     "extraOptions": {
       "relevantCase": "Related Cases",
       "method": "Rights Protection Methods",
-      "result": "Possible Results",
-      "custom": "Custom"
+      "result": "Possible Results"
     },
     "prompt": {
       "intro": "Now you will provide legal consultation",

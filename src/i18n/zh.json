@@ -5,6 +5,8 @@
   "remarks": "备注",
   "remarksPlaceholder": "任何您想要补充的",
   "resultTitle": "结果显示处：",
+  "custom": "自定义",
+  "customPlaceholder": "请输入任何您想补充的",
   "dragger":{
     
     "uploadText": "点击或将音频文件拖到此区域进行上传。",
@@ -81,8 +83,7 @@
     
     "preferencesOptions": {
       "summary": "总结",
-      "outline": "大纲",
-      "custom": "自定义"
+      "outline": "大纲"
     },
     "prompt": {
       "intro": "现在你是一个笔记/会议助手",
@@ -102,8 +103,8 @@
     "summarizeButton": "汇总"
   },
   "legal":{
-    "country": "所在国家",
-    "countryPlaceholder": "哪个国家的法律？",
+    "country": "所在地区",
+    "countryPlaceholder": "哪个地区的法律？",
     "countrySelect": "选择地区",
     "contentRulesMessage": "请输入问题描述",
     "extra" : "你需要的额外信息",

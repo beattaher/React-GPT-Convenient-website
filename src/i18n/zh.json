@@ -1,7 +1,22 @@
-{
+{ 
+  "homeTitle": "首页",
+  "nothingError":"请至少输入文本内容或上传音频文件！",
+  "sayLng": "请给我简体中文的回复。",
+  "remarks": "备注",
+  "remarksPlaceholder": "任何您想要补充的",
+  "resultTitle": "结果显示处：",
   "dragger":{
+    
     "uploadText": "点击或将音频文件拖到此区域进行上传。",
     "uploadHint": "仅支持单个音频文件上传。"
+  },
+  "upload":{
+    "uploadText": "点击或将音频文件拖到此区域进行上传。",
+    "uploadHint": "仅支持单个音频文件上传。",
+    "uploadAudio": "上传音频",
+    "TypeError": "请上传音频文件！",
+    "NumError":"仅支持单个音频文件上传",
+    "SizeError":"文件大小不能超过26M"
   },
   "login": {
     "apiKey": "OpenAI Key",
@@ -12,13 +27,12 @@
     "invalidApiKey": "API Key 无效，请重试。",
     "validApiKey": "key 有效",
     "errorNetwork": "发生错误，请检查网络连接并稍后再试。",
-    "whatIsKey": "Key？啥？",
+    "whatIsKey": "Key？",
     "modalTitle": "什么是 OpenAI Key？",
-    "modalExplanation": "OpenAI Key 是用于访问 OpenAI 平台 API 的键。要使用其 AI 功能，您需要有效的 OpenAI Key。如需获取 OpenAI Key，请访问 [https://beta.openai.com/signup/](https://beta.openai.com/signup/) 并创建账户。您可以在 OpenAI 控制面板的 API Keys 部分找到密钥。",
+    "modalExplanation": "OpenAI Key 是用于访问 OpenAI 平台 API 的键。要使用其 AI 功能，您需要有效的 OpenAI Key。如需获取 OpenAI Key，请访问 https://beta.openai.com/signup 并创建账户。您可以在 OpenAI 控制面板的 API Keys 部分找到密钥。",
     "validateKey": "验证Key"
   },
   "home": {
-    "title": "首页",
     "apiKeyLabel": "更改你的openAI key",
     "inputApiKey": "请输入你的openAI key",
     "inputNewApiKey": "请输入新的openAI key",
@@ -44,27 +58,27 @@
     "menu": {
       "projectDescription": "项目说明",
       "noteAssistant": "笔记助手",
-      "legalConsultation": "法律咨询（开发中）"
+      "legalConsultation": "法律咨询"
     }
   },
   "noteHelper": {
     "breadcrumb": {
-      "home": "首页",
+      
       "noteAssistant": "笔记助手"
     },
-    "resultTitle": "结果显示处：",
+    
     "cardTitle": "主题",
     "formLabel": {
       "title": "主题",
       "formType": "形式",
       "uploadAudio": "上传音频",
       "outputPreferences": "输出偏好",
-      "textContent": "文字内容",
-      "remarks": "备注"
+      "textContent": "文字内容"
+      
     },
     "titlePlaceholder": "这是关于什么？",
     "formTypePlaceholder": "这是什么？文章？会议？课程？",
-    "remarksPlaceholder": "任何您想要补充的",
+    
     "preferencesOptions": {
       "summary": "总结",
       "outline": "大纲",
@@ -77,13 +91,40 @@
       "content": "文本内容",
       "audioText": "音频文本",
       "preferences": "请根据上述内容得出",
-      "remarks": "备注",
+      
       "sayLng": "请给我简体中文的回复。",
       "removeClutter": "请把上述信息中的废话（没有有效信息，和主题无关的信息）单独总结到最后，不要写在主干里面。如果没有有效信息，你可以只写废话总结。"
     },
+    
+    
     "contentRulesMessage": "请输入文章内容",
     "removeClutterButton": "除去废话（实验性功能）",
     "summarizeButton": "汇总"
+  },
+  "legal":{
+    "country": "所在国家",
+    "countryPlaceholder": "哪个国家的法律？",
+    "countrySelect": "选择地区",
+    "contentRulesMessage": "请输入问题描述",
+    "extra" : "你需要的额外信息",
+    "submitButton": "咨询",
+    "breadcrumb": {
+      "noteAssistant": "法律咨询"
+    },
+    "extraOptions": {
+      "relevantCase": "相关案例",
+      "method": "维权方法",
+      "result": "可能的结果",
+      "custom": "自定义"
+    },
+    "prompt": {
+      "intro": "现在你将提供法律咨询",
+      "country": "的法律",
+      "content": "问题描述",
+      "audioText": "音频文本",
+      "extra": "除了基本的回答，还请包括以下信息：",
+      "remarks": "备注"
+    }
   }
 }
 

@@ -59,7 +59,7 @@ const Home = () => {
 
   return (
     <Card
-      title={t('home.title')}
+      title={t('homeTitle')}
     >
       {/* 设置 initialValues 中的 model 为 selectedModel */}
       <Form form={form} initialValues={{ title: '', model: selectedModel }} onFinish={handleApikeySubmit}>

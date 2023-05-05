@@ -75,8 +75,8 @@ const GeekLayout = () => {
             <Menu.Item icon={<EditOutlined />} key="/noteHelper">
               <Link to="/noteHelper">{t('layout.menu.noteAssistant')}</Link>
             </Menu.Item>
-            <Menu.Item icon={<SafetyCertificateOutlined />} key="/publish">
-              <Link to="/publish">{t('layout.menu.legalConsultation')}</Link>
+            <Menu.Item icon={<SafetyCertificateOutlined />} key="/legal">
+              <Link to="/legal">{t('layout.menu.legalConsultation')}</Link>
             </Menu.Item>
           </Menu>
         </Sider>

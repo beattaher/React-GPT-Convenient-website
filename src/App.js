@@ -7,7 +7,7 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { AuthComponent } from '@/components/AuthComponent';
 import { lazy, Suspense } from 'react';
 import './i18n'
-const Publish = lazy(() => import('@/pages/Publish'));
+const Legal = lazy(() => import('@/pages/Legal'));
 const NoteHelper = lazy(() => import('@/pages/NoteHelper'));
 const Home = lazy(() => import('@/pages/Home'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
@@ -24,7 +24,7 @@ function App() {
           }>
             <Route index element={<Home />} />
             <Route path="noteHelper" element={<NoteHelper />} />
-            <Route path="publish" element={<Publish />} />
+            <Route path="legal" element={<Legal />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} /> //--- 将这一行移到这里

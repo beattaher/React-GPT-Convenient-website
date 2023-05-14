@@ -122,9 +122,10 @@ const NoteHelper = () => {
       presence_penalty: 0.0,
     });
     */
-    const response = await apiStore.callModel(prompt, apiStore.selectedModel)
+    const response = await apiStore.callModel(prompt, apiStore.selectedModel, (newResponse) => {
+      setResponse((prevResponse) => prevResponse + newResponse);
+    });
     
-    setResponse(response);
     //setResponse(getResponse.data.choices[0].text); //for text-davinci-003
     setProgressPercent(100);
   };

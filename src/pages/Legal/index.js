@@ -141,7 +141,9 @@ const Legal = () => {
     const maxTokens = 3700 - promptTokenCount;
     console.log(maxTokens);
 
-    const response = await apiStore.callModel(prompt, apiStore.selectedModel)
+    const response = await apiStore.callModel(prompt, apiStore.selectedModel, (newResponse) => {
+      setResponse((prevResponse) => prevResponse + newResponse);
+    });
     
     setResponse(response);
     setProgressPercent(100);

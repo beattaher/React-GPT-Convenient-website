@@ -159,6 +159,11 @@ const Legal = () => {
   };
 
   const handleChatSubmit = () => {
+    if (inputValue.trim() === "") 
+    {
+      message.error(t('chatNothingError'));
+      return;
+    }
     // 向messages中添加用户输入内容
     setMessages((prevMessages) => [
       ...prevMessages,

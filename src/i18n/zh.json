@@ -10,6 +10,7 @@
   "continueChat": "在这里接着聊",
   "latestAnswer": "最新回答",
   "user" : "您",
+  "chatNothingError": "聊点什么吧，亲",
   "countinueChatButton": "继续聊",
   "dragger":{
     
@@ -99,11 +100,11 @@
     "preferencesOptions": {
       "requiredCheckMessage": "请至少选择一个, 不然不知道给你发什么",
       "summary": "总结",
-      "outline": "大纲",
+      "outline": "大纲（组织结构）",
       "custom": "自定义"
     },
     "prompt": {
-      "intro": "现在你是一个笔记/会议助手",
+      "intro": "现在你是一个笔记/会议助手，请根据下面的提示和信息完成任务",
       "title": "标题",
       "formType": "这是一个",
       "content": "文本内容",

@@ -11,6 +11,7 @@
   "latestAnswer": "Latest Answer",
   "user": "You",
   "countinueChatButton" : "Continue Chatting",
+  "chatNothingError": "Please enter something",
   "dragger": {
     "uploadText": "Click or drag an audio file to this area to upload.",
     "uploadHint": "Support for single audio file upload only."

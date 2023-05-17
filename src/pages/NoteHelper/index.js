@@ -144,6 +144,13 @@ const NoteHelper = () => {
   };
 
   const handleChatSubmit = () => {
+    // 添加这个条件检查
+    if (inputValue.trim() === "") 
+    {
+      message.error(t('chatNothingError'));
+      return;
+    }
+  
     // 向messages中添加用户输入内容
     setMessages((prevMessages) => [
       ...prevMessages,
@@ -156,6 +163,7 @@ const NoteHelper = () => {
     setResponse('');
     // 处理用户输入的逻辑
   };
+  
   
   const handleSubmit = (values) => {
     const { title, formType, content, remarks } = values;

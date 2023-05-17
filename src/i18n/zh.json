@@ -60,9 +60,9 @@
     "wechat": "微信: dd15701622127",
     "github": " Github: https://github.com/beattaher/React-GPT-Convenient-website",
     "introduction" :{
-      "GPT-3.5-turbo": "A newer version with performance close to Text-davinci-003 but at a lower cost.",
-      "Text-davinci-003" : "High-performance, suitable for various tasks, but comes at a higher price.",
-      "GPT-4" : "The latest and most powerful version. Requires a special API Key and may not be available to all users."
+      "GPT-3.5-turbo": "较新的版本，性能与 Text-davinci-003 接近，但成本更低。",
+      "Text-davinci-003" : "高性能，适用于各种任务，但价格较高。",
+      "GPT-4" : "最新、最强大的版本。需要特殊 API Key，可能不适用于所有用户。"
     }
   },
   "layout": {

@@ -7,6 +7,7 @@ import {
   message,
   Modal,
   Space,
+  Select,
 } from 'antd';
 import { useStore } from '@/store';
 import { useNavigate } from 'react-router-dom';
@@ -21,9 +22,11 @@ function Login() {
 
   const hasApiKey = !!apiStore.apiKey;
   
-  const { t ,ready} = useTranslation();
+  const { t, i18n, ready } = useTranslation();
 
-  
+  const handleLanguageChange = (value) => {
+    i18n.changeLanguage(value);
+  };
 
   const apiKeyLabel = hasApiKey ? t("login.newApiKey") : t("login.apiKey");
   const apiKeyPlaceholder = hasApiKey
@@ -91,12 +94,19 @@ function Login() {
           </Form.Item> 
           <Form.Item>
             <Button
-              className="verify_key"
+              className="buttom"
               type="primary"
               htmlType="submit"
             >
               {t("login.validateKey")}
             </Button>
+          </Form.Item> 
+          <Form.Item>
+          <Select className="buttom" defaultValue={i18n.language} onChange={handleLanguageChange} style={{ width: 120 }}>
+            <Select.Option value="en">English</Select.Option>
+            <Select.Option value="zh">中文</Select.Option>
+          </Select>
+
           </Form.Item>
         </Form>
       </Card>

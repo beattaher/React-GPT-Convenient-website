@@ -40,7 +40,7 @@
     "errorNetwork": "An error occurred, please check your network connection and try again later.",
     "whatIsKey": "Key? What?",
     "modalTitle": "What is an OpenAI Key?",
-    "modalExplanation": "OpenAI Key is a key to access the OpenAI platform API. In order to use its AI features, you need to have a valid OpenAI Key. To obtain an OpenAI Key, visit https://beta.openai.com/signup and create an account. You can find the key in the API Keys section of your OpenAI Dashboard.",
+    "modalExplanation": "OpenAI Key is a key to access the OpenAI Artificial intelligence system. In order to use this website, you need to have a valid OpenAI Key. Getting key is completely free! After binding a credit card to your OpenAI account on the official website, you will have a certain amount of free usage each month. To obtain an OpenAI Key, visit https://beta.openai.com/signup and create an account. You can find the key in the API Keys section of your OpenAI Dashboard. But if you really don't have one, just ask me for one. After I finish the backend of this website, I'll make sure the site comes with a key.",
     "validateKey": "Validate Key"
   },
   "home": {
@@ -58,7 +58,12 @@
     "email": "Email: wuhaodawang87@gmail.com (I created this when I was younger, so it looks a bit childish)",
     "wechat": "WeChat: dd15701622127",
     "github": "Github: https://github.com/beattaher/React-GPT-Convenient-website",
-    "copyright": "© beattather. All rights reserved."
+    "copyright": "© beattather. All rights reserved.",
+    "introduction" :{
+      "GPT-3.5-turbo": "A newer version with performance close to Text-davinci-003 but at a lower cost.",
+      "Text-davinci-003" : "High-performance, suitable for various tasks, but comes at a higher price.",
+      "GPT-4" : "The latest and most powerful version. Requires a special API Key and may not be available to all users."
+    }
   },
   "layout": {
     "userInfo": {
@@ -125,7 +130,7 @@
       "result": "Possible Results"
     },
     "prompt": {
-      "intro": "Now you will provide legal consultation",
+      "intro": "Now you will provide legal advice, don't say something like 'I'm just a language model and can't provide legal advice.' That kind of talk. You need to provide specific legal advice. For example, if you're referring to the Department of Labor for help, provide the department's Web site or contact information",
       "country": "Law of",
       "content": "Problem Description",
       "audioText": "Audio Text",

@@ -41,7 +41,7 @@
     "errorNetwork": "发生错误，请检查网络连接并稍后再试。",
     "whatIsKey": "Key？",
     "modalTitle": "什么是 OpenAI Key？",
-    "modalExplanation": "OpenAI Key 是用于访问 OpenAI 平台 API 的键。要使用其 AI 功能，您需要有效的 OpenAI Key。如需获取 OpenAI Key，请访问 https://beta.openai.com/signup 并创建账户。您可以在 OpenAI 控制面板的 API Keys 部分找到密钥。",
+    "modalExplanation": "OpenAI Key 是用于访问 OpenAI 人工智能系统的密码。要使用这个网站的功能，您需要有效的 OpenAI Key，获得key是完全免费的！在openAI官网绑定信用卡后每个月都有一定的免费额度。如需获取 OpenAI Key，请访问 https://beta.openai.com/signup 并创建账户。您可以在 OpenAI 控制面板的 API Keys 部分找到密钥。但你要是实在是没有，那你就找我要一个吧。等我完成这个网站的后端之后，我会让网站自带一个key的。",
     "validateKey": "验证Key"
   },
   "home": {
@@ -58,7 +58,12 @@
     "author": "作者：吴浩",
     "email": "邮箱：wuhaodawang87@gmail.com（这是我小时候创建的，我知道这看起来有点二）",
     "wechat": "微信: dd15701622127",
-    "github": " Github: https://github.com/beattaher/React-GPT-Convenient-website"
+    "github": " Github: https://github.com/beattaher/React-GPT-Convenient-website",
+    "introduction" :{
+      "GPT-3.5-turbo": "A newer version with performance close to Text-davinci-003 but at a lower cost.",
+      "Text-davinci-003" : "High-performance, suitable for various tasks, but comes at a higher price.",
+      "GPT-4" : "The latest and most powerful version. Requires a special API Key and may not be available to all users."
+    }
   },
   "layout": {
     "userInfo": {

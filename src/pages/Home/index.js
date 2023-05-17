@@ -51,9 +51,9 @@ const Home = () => {
 
   const modelDifference = ( // 定义三个模型之间的区别
     <div>
-      <p><strong>GPT-3.5-turbo:</strong> 较新的版本，性能与 Text-davinci-003 接近，但成本更低。</p>
-      <p><strong>Text-davinci-003:</strong> 高性能，适用于各种任务，但价格较高。</p>
-      <p><strong>GPT-4:</strong> 最新、最强大的版本。需要特殊 API Key，可能不适用于所有用户。</p>
+      <p><strong>GPT-3.5-turbo:</strong> {t('home.introduction.GPT-3.5-turbo')}</p>
+      <p><strong>Text-davinci-003:</strong> {t('home.introduction.Text-davinci-003')}</p>
+      <p><strong>GPT-4:</strong> {t('home.introduction.GPT-4')}</p>
     </div>
   );
 

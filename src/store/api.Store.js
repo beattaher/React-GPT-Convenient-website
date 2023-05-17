@@ -12,7 +12,7 @@ class ApiStore {
   }
 
   setApiKey = (apiKey) => {
-    console.log(apiKey);
+    
     this.apiKey = apiKey;
     setToken(apiKey);
   };
@@ -53,7 +53,7 @@ class ApiStore {
         delete requestBody.model;
         requestBody.prompt = prompt;
       }else{
-        requestBody.messages = [{ role: "user", content: prompt }];
+        requestBody.messages = prompt;
       }
       
       const response = await fetch(endpoint, {
@@ -67,7 +67,10 @@ class ApiStore {
       
   
       if (response.status === 200) {
-
+        if (prompt[0].content === "test"){
+          console.log("test true");
+          return true; // API key is valid
+        }
         const reader = response.body.getReader();
         let result = "";
   
@@ -102,7 +105,7 @@ class ApiStore {
                 result += newText;
                 if (updateCallback) {
                   updateCallback(newText);
-                  console.log("result",result);
+                  
                 }
               }
                // Append the choice text to the result
@@ -130,6 +133,7 @@ class ApiStore {
   };
   
   callEngines = async (prompt = "test", model = "text-davinci-003", updateCallback) => {
+    console.log("in callEngines prompt",prompt);
     const maxTokens = prompt !== "test" ? 3700 - tokenCounter(prompt) : 1;
     const endpoint = `https://api.openai.com/v1/engines/${model}/completions`;
     
@@ -137,8 +141,8 @@ class ApiStore {
   };
   
 
-  callGPT = async (prompt = "test", model = "gpt-4", updateCallback) => {
-
+  callGPT = async (prompt = [{"role": "user", "content": 'test'}], model = "gpt-4", updateCallback) => {
+    console.log("in callGPT prompt",prompt);
     let maxTokens;
     if (prompt === "test") {
       maxTokens = 5;
@@ -154,8 +158,9 @@ class ApiStore {
   
   
 
-  callModel = async (prompt, model, updateCallback) => {
-    console.log("updateCallback",updateCallback);
+  callModel = async (prompt = [{"role": "user", "content": 'test'}], model, updateCallback) => {
+    //console.log("updateCallback",updateCallback);
+    console.log("in callModel prompt",prompt);
     if (model === 'gpt-3.5-turbo' || model === 'gpt-4') {
       return await this.callGPT(prompt, model, updateCallback);
     } else {

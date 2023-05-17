@@ -5,7 +5,7 @@
 
     
 }
-  .summary {
+  .submit-button {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -30,6 +30,23 @@
     right: 0;
     z-index: 2; // 添加这一行以确保按钮位于ant-card-head之上
   }
+
+  .message-wrapper {
+    margin-bottom: 16px;
+    width: 100%
+  }
+  
+  .chat-message {
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    width: 100%
+  }
+
+  .first-user-message {
+    display: none;
+  }
+  
   
   
   

@@ -7,6 +7,10 @@
   "resultTitle": "Result display area:",
   "custom": "Custom",
   "customPlaceholder": "Please enter anything you would like to add",
+  "continueChat": "Continue Chatting here",
+  "latestAnswer": "Latest Answer",
+  "user": "You",
+  "countinueChatButton" : "Continue Chatting",
   "dragger": {
     "uploadText": "Click or drag an audio file to this area to upload.",
     "uploadHint": "Support for single audio file upload only."
@@ -18,6 +22,12 @@
     "TypeError": "Please upload an audio file!",
     "NumError": "Only single audio file upload is supported",
     "SizeError": "File size must not exceed 26M"
+  },
+  "prompt": {
+    "audioIntro": "Audio file information",
+    "audioFileName": "File Name",
+    "audioText": "Audio Text",
+    "content": "Text Content"
   },
   "login": {
     "apiKey": "OpenAI Key",
@@ -68,6 +78,7 @@
       "noteAssistant": "Note Assistant"
     },
     "cardTitle": "Topic",
+    "system": "Note assistant",
     "formLabel": {
       "title": "Title",
       "formType": "Form Type",
@@ -78,12 +89,13 @@
     "titlePlaceholder": "What is this about?",
     "formTypePlaceholder": "What is it? Article? Meeting? Course?",
     "preferencesOptions": {
+      "requiredCheckMessage": "Please select at least one output preference, otherwise I don't know what to send you",
       "summary": "Summary",
       "outline": "Outline",
       "custom": "Custom"
     },
     "prompt": {
-      "intro": "Now you are a note/meeting assistant",
+      "intro": "Now you will provide legal advice, don't say something like “I'm just a language model and can't provide legal advice.” You need to provide specific legal advice. For example, if you're referring to the Department of Labor for help, provide the department's Web site or contact information",
       "title": "Title",
       "formType": "This is a",
       "content": "Text Content",
@@ -103,6 +115,7 @@
     "contentRulesMessage": "Please enter a problem description",
     "extra": "Additional information you need",
     "submitButton": "Consult",
+    "system": "Legal assistant",
     "breadcrumb": {
       "noteAssistant": "Legal Consultation"
     },

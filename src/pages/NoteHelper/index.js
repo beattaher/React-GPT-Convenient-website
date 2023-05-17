@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Card,
+  Tag,
   Breadcrumb,
   Form,
   Input,
@@ -19,7 +20,7 @@ import { useStore } from '@/store';
 import FormData from 'form-data';
 import './index.scss';
 import { useTranslation } from 'react-i18next';
-import { tokenCounter } from '@/utils'
+import { tokenCounter, handleAudioUpload } from '@/utils'
 import { observer } from 'mobx-react-lite';
 
 const { Configuration, OpenAIApi } = require('openai');
@@ -40,9 +41,26 @@ const NoteHelper = () => {
   const [preferences, setPreferences] = useState([]);
   const [customContent, setCustomContent] = useState('');
   const [removeClutter, setRemoveClutter] = useState(false);
-  
-  
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState(''); 
 
+  // 异步把信息给API
+  useEffect(() => {
+    const fetchData = async () => {
+      if (messages.length > 0) {
+        const response = await apiStore.callModel(
+          messages,
+          apiStore.selectedModel,
+          (newResponse) => {
+            setResponse((prevResponse) => prevResponse + newResponse);
+          }
+        );
+      }
+    };
+  
+    fetchData();
+  }, [messages]);
+  
   const callOpenAICompletionAPI = async ({ title, formType, content, remarks}) => {
     setProgressPercent(33);
     const configuration = new Configuration({
@@ -106,61 +124,53 @@ const NoteHelper = () => {
     
     
     prompt += `${t('noteHelper.prompt.sayLng')}`
-    console.log(prompt);
-    const promptTokenCount = tokenCounter(prompt);
-    const maxTokens = 3700 - promptTokenCount;
-    console.log(maxTokens);
-    /*
-    //for text-davinci-003
-    const getResponse = await openai.createCompletion({
-      model: 'text-davinci-003',
-      prompt,
-      temperature: 0.5,
-      max_tokens: maxTokens,
-      top_p: 1.0,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.0,
-    });
-    */
-    const response = await apiStore.callModel(prompt, apiStore.selectedModel, (newResponse) => {
-      setResponse((prevResponse) => prevResponse + newResponse);
-    });
+    console.log("in page",prompt);
+    
+
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      ...(response ? [{ content: response, role: 'system' }] : []),
+      { content: prompt, role: 'user' },
+    ]);
+    
+    
+    console.log("messages",messages);
+    
+    
+
     
     //setResponse(getResponse.data.choices[0].text); //for text-davinci-003
     setProgressPercent(100);
   };
 
+  const handleChatSubmit = () => {
+    // 向messages中添加用户输入内容
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      ...(response ? [{ content: response, role: 'system' }] : []),
+      { content: inputValue, role: 'user' },
+    ]);
+  
+    // 清空输入框内容
+    setInputValue('');
+    setResponse('');
+    // 处理用户输入的逻辑
+  };
+  
   const handleSubmit = (values) => {
     const { title, formType, content, remarks } = values;
-
-    callOpenAICompletionAPI({ title, formType, content, remarks});
+    setResponse('');
+    console.log(response)
+    callOpenAICompletionAPI({ title, formType, content, remarks });
   };
 
   const handleUpload = async (file) => {
-      const isAudio = file.type.startsWith('audio');
-      const maxFileSize = 25 * 1024 * 1024; // 25 MB
-  
-      if (isAudio && audioList.length < 1 && file.size <= maxFileSize) {
-        return true;
-      }
-  
-      // 如果文件不是音频格式
-      else if (!isAudio) {
-        message.error(t('upload.TypeError'));
-        return false;
-      }
-  
-      // 如果已经上传了一个文件
-      else if (audioList.length > 0) {
-        message.warning(t('upload.NumError'));
-        return false;
-      }
-      
-      // 如果文件大小超过限制
-      else if (file.size > maxFileSize) {
-        message.error(t('upload.SizeError'));
-        return false;
-      }
+    if (await handleAudioUpload(file, audioList, t)) {
+      setAudioList([file]);
+    } else {
+      console.log(false, audioList);
+    }
+    return false;
   };
   
   
@@ -179,31 +189,96 @@ const NoteHelper = () => {
     setRemoveClutter(!removeClutter);
   };
   
+  React.useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, [messages]);
+
+  
+
   return (
     <div>
       <Card
-        title={
-          <Breadcrumb separator=">">
-            <Breadcrumb.Item>
-              <a href="#">{t('homeTitle')}</a>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>{t('noteHelper.breadcrumb.noteAssistant')}</Breadcrumb.Item>
-          </Breadcrumb>
-        }
-      >
-        <Space>
-          <Progress className="progress_circle" type="circle" percent={progressPercent} />
-          <div>
-            <Title level={3}>{t('resultTitle')}</Title>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: response ? response.replace(/\n/g, '<br/>') : '',
-              }}
-            ></div>
+    title={
+      <Breadcrumb separator=">">
+        <Breadcrumb.Item>
+          <a href="#">{t('homeTitle')}</a>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>{t('noteHelper.breadcrumb.noteAssistant')}</Breadcrumb.Item>
+      </Breadcrumb>
+    }
+  >
+    <Form>
+    <Form.Item>
+      <Progress className="progress_circle" type="circle" style={{ left: '50%' }} percent={progressPercent} />
+    </Form.Item>
+      <Title level={3}>{t('resultTitle')}</Title>
+      <Form.Item>
+        <div className="chat-wrapper">
+          {messages.length < 1 ? (
+            <div className="empty"></div>
+          ) : (
+            messages.map((msg, i) => (
+              //console.log("msg",msg),
+              <Card
+                key={i}
+                className={`message-wrapper ${i === 0 && msg.role === 'user' ? 'first-user-message' : ''}`}
+                bordered={false}
+              >
+                <div className="role">
+                  <Tag color={msg.role === 'user' ? 'blue' : 'green'}>
+                    {msg.role === 'user' ? t('user') : t('noteHelper.system')}
+                  </Tag>
+                  
+                </div>
+                <pre className="chat-message">{msg.content}</pre>
+              </Card>
+            ))
+          )}
+        </div>
+      </Form.Item>
+      <Form.Item>
+        <Card>
+          <div className="role">
+            <Tag color='purple'>{t("latestAnswer")}</Tag>
           </div>
-          
-        </Space>
-      </Card>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: response ? response.replace(/\n/g, '<br/>') : '',
+            }}
+          ></div>
+        </Card>
+      </Form.Item>
+      <Form.Item>
+        {/* 在此处添加输入框 */}
+        <Input
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder={t('continueChat')}
+          onPressEnter={(e) => {
+            e.preventDefault();
+            //共用处理逻辑
+            handleChatSubmit();
+          }}
+        />
+      </Form.Item>
+      <Form.Item>
+        {/* 添加按钮，并设置 onClick 函数 */}
+        <Button
+          className="submit-button"
+          type="primary"
+          onClick={() => {
+            //共用处理逻辑
+            handleChatSubmit();
+          }}
+        >
+          {t('countinueChatButton')}
+        </Button>
+      </Form.Item>
+      
+        
+      
+    </Form>
+  </Card>
       <Card>
         <Form initialValues={{ title: '', formType: '', content: '' }} onFinish={handleSubmit}>
           <Form.Item
@@ -260,7 +335,18 @@ const NoteHelper = () => {
           </Form.Item>
           
 
-          <Form.Item label={t('noteHelper.formLabel.outputPreferences')}>
+          <Form.Item
+            label={t('noteHelper.formLabel.outputPreferences')}
+
+            rules={[
+              {
+                required: true,
+                type: 'array',
+                min: 1,
+                message: t('noteHelper.preferencesOptions.requiredCheckMessage'),
+              },
+            ]}
+          >
             <Checkbox.Group onChange={onChangePreferences}>
               <Row>
                 <Checkbox value={t('noteHelper.preferencesOptions.summary')}>{t('noteHelper.preferencesOptions.summary')}</Checkbox>
@@ -302,7 +388,7 @@ const NoteHelper = () => {
             </Button>
           </Form.Item>
           <Form.Item>
-            <Button className="summary" size="large" type="primary" htmlType="submit">
+            <Button className="submit-button" size="large" type="primary" htmlType="submit">
               {t('noteHelper.summarizeButton')}
             </Button>
           </Form.Item>

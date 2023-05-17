@@ -1,6 +1,8 @@
 // tokenCountHelper.js
 
-const tokenCounter = (text) => {
+const tokenCounter = (textArray) => {
+  let text = textArray[textArray.length - 1].content;
+  console.log("in counter text",text);
   const CHINESE_CHARACTER_REGEX = /[\u4e00-\u9fff]/;
 
   // 计算英文单词数量

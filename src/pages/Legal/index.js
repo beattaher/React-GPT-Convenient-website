@@ -12,7 +12,7 @@ import {
   Space,
   Checkbox,
   Row,
-  Cascader
+  Tag,
 } from 'antd';
 import { PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
@@ -22,8 +22,8 @@ import './index.scss';
 import { useTranslation } from 'react-i18next';
 import { tokenCounter } from '@/utils'
 import { observer } from 'mobx-react-lite';
+import { set } from 'lodash';
 
-import { getUserCountryName } from '@/utils';
 
 const { Configuration, OpenAIApi } = require('openai');
 const { Title, Paragraph } = Typography;
@@ -34,18 +34,6 @@ class CustomFormData extends FormData {
   }
 }
 
-// Mock 数据源
-const countries = [
-  {
-    value: 'China',
-    label: '中国'
-  },
-  {
-    value: 'United States',
-    label: '美国'
-  },
-  // 添加更多的国家数据...
-];
 
 const Legal = () => {
   const { t } = useTranslation();
@@ -57,6 +45,8 @@ const Legal = () => {
   const [customContent, setCustomContent] = useState('');
   const [form] = Form.useForm();
   const [country, setCountry] = useState();
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState(''); 
 
   useEffect(() => {
     // 假设您已经有了这个 Promise
@@ -77,6 +67,22 @@ const Legal = () => {
 
   console.log(country);
   
+  useEffect(() => {
+    const fetchData = async () => {
+      if (messages.length > 0) {
+        const response = await apiStore.callModel(
+          messages,
+          apiStore.selectedModel,
+          (newResponse) => {
+            setResponse((prevResponse) => prevResponse + newResponse);
+          }
+        );
+      }
+    };
+  
+    fetchData();
+  }, [messages]);
+
   const handleCountryChange = (event) => {
     setCountry(event.target.value);
   };
@@ -101,7 +107,7 @@ const Legal = () => {
       ? (otherPreferences.length > 0 ? otherPreferences.join(', ') + ', ' : '') + customContent
       : preferences.join(', ');
     
-      
+    let audioFileName = "";  
     if (audioList.length > 0) {
       console.log(audioList[0]);
       const audioFile = audioList[0];
@@ -126,7 +132,10 @@ const Legal = () => {
     }
 
     if (audio_text) {
-      prompt += `${t('legal.prompt.audioText')}: ${audio_text}\n`;
+      prompt += `${t('prompt.audioIntro')}:\n`;
+      prompt += `${t('prompt.audioFileName')}: ${audioFileName}\n`;
+      prompt += `${t('prompt.audioText')}: ${audio_text}\n`;
+       
     }
 
     if (extraOutput) {
@@ -137,21 +146,35 @@ const Legal = () => {
     
     prompt += `${t('sayLng')}`
     console.log(prompt);
-    const promptTokenCount = tokenCounter(prompt);
-    const maxTokens = 3700 - promptTokenCount;
-    console.log(maxTokens);
 
-    const response = await apiStore.callModel(prompt, apiStore.selectedModel, (newResponse) => {
-      setResponse((prevResponse) => prevResponse + newResponse);
-    });
+
     
-    setResponse(response);
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      ...(response ? [{ content: response, role: 'system' }] : []),
+      { content: prompt, role: 'user' },
+    ]);
+    
     setProgressPercent(100);
+  };
+
+  const handleChatSubmit = () => {
+    // 向messages中添加用户输入内容
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      ...(response ? [{ content: response, role: 'system' }] : []),
+      { content: inputValue, role: 'user' },
+    ]);
+  
+    // 清空输入框内容
+    setInputValue('');
+    setResponse('');
+    // 处理用户输入的逻辑
   };
 
   const handleSubmit = (values) => {
     const { content, remarks, country } = values;
-
+    setResponse('');
     callOpenAICompletionAPI({ content, remarks, country });
   };
 
@@ -206,18 +229,77 @@ const Legal = () => {
           </Breadcrumb>
         }
       >
-        <Space>
-          <Progress className="progress_circle" type="circle" percent={progressPercent} />
-          <div>
-            <Title level={3}>{t('resultTitle')}</Title>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: response ? response.replace(/\n/g, '<br/>') : '',
-              }}
-            ></div>
+        <Form>
+    <Form.Item>
+      <Progress className="progress_circle" type="circle" style={{ left: '50%' }} percent={progressPercent} />
+    </Form.Item>
+      <Title level={3}>{t('resultTitle')}</Title>
+      <Form.Item>
+        <div className="chat-wrapper">
+          {messages.length < 1 ? (
+            <div className="empty"></div>
+          ) : (
+            messages.map((msg, i) => (
+              //console.log("msg",msg),
+              <Card
+                key={i}
+                className={`message-wrapper ${i === 0 && msg.role === 'user' ? 'first-user-message' : ''}`}
+                bordered={false}
+              >
+                <div className="role">
+                  <Tag color={msg.role === 'user' ? 'blue' : 'green'}>
+                    {msg.role === 'user' ? t('user') : t('legal.system')}
+                  </Tag>
+                  
+                </div>
+                <pre className="chat-message">{msg.content}</pre>
+              </Card>
+            ))
+          )}
+        </div>
+      </Form.Item>
+      <Form.Item>
+        <Card>
+          <div className="role">
+            <Tag color='purple'>{t("latestAnswer")}</Tag>
           </div>
-          
-        </Space>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: response ? response.replace(/\n/g, '<br/>') : '',
+            }}
+          ></div>
+        </Card>
+      </Form.Item>
+      <Form.Item>
+        {/* 在此处添加输入框 */}
+        <Input
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder={t('continueChat')}
+          onPressEnter={(e) => {
+            e.preventDefault();
+            //共用处理逻辑
+            handleChatSubmit();
+          }}
+        />
+      </Form.Item>
+      <Form.Item>
+        {/* 添加按钮，并设置 onClick 函数 */}
+        <Button
+          className="submit-button"
+          type="primary"
+          onClick={() => {
+            //共用处理逻辑
+            handleChatSubmit();
+          }}
+        >
+          {t('countinueChatButton')}
+        </Button>
+      </Form.Item>
+      
+        
+      
+    </Form>
       </Card>
       <Card>
         <Form form={form} initialValues={{ content: '' }} onFinish={handleSubmit}>
@@ -287,7 +369,6 @@ const Legal = () => {
                 setAudioList((oldAudioList) => oldAudioList.filter((item) => item.uid !== file.uid));
               }}
               onPreview={() => {}}
-              
             >
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
@@ -305,7 +386,7 @@ const Legal = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button className="summary" size="large" type="primary" htmlType="submit">
+            <Button className="submit-button" size="large" type="primary" htmlType="submit">
               {t('legal.submitButton')}
             </Button>
           </Form.Item>

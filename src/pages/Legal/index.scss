@@ -9,3 +9,25 @@
       height: 146px;
     }
   }
+
+  .submit-button {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .message-wrapper {
+    margin-bottom: 16px;
+    width: 100%
+  }
+  
+  .chat-message {
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    width: 100%
+  }
+
+  .first-user-message {
+    display: none;
+  }

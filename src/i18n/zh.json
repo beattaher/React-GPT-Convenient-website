@@ -7,6 +7,10 @@
   "resultTitle": "结果显示处：",
   "custom": "自定义",
   "customPlaceholder": "请输入任何您想补充的",
+  "continueChat": "在这里接着聊",
+  "latestAnswer": "最新回答",
+  "user" : "您",
+  "countinueChatButton": "继续聊",
   "dragger":{
     
     "uploadText": "点击或将音频文件拖到此区域进行上传。",
@@ -19,6 +23,12 @@
     "TypeError": "请上传音频文件！",
     "NumError":"仅支持单个音频文件上传",
     "SizeError":"文件大小不能超过26M"
+  },
+  "prompt": {
+    "audioIntro": "音频文件信息",
+    "audioFileName": "文件名",
+    "audioText": "音频内容",
+    "content": "文本内容"
   },
   "login": {
     "apiKey": "OpenAI Key",
@@ -68,7 +78,7 @@
       
       "noteAssistant": "笔记助手"
     },
-    
+    "system": "笔记助手",
     "cardTitle": "主题",
     "formLabel": {
       "title": "主题",
@@ -82,8 +92,10 @@
     "formTypePlaceholder": "这是什么？文章？会议？课程？",
     
     "preferencesOptions": {
+      "requiredCheckMessage": "请至少选择一个, 不然不知道给你发什么",
       "summary": "总结",
-      "outline": "大纲"
+      "outline": "大纲",
+      "custom": "自定义"
     },
     "prompt": {
       "intro": "现在你是一个笔记/会议助手",
@@ -109,6 +121,7 @@
     "contentRulesMessage": "请输入问题描述",
     "extra" : "你需要的额外信息",
     "submitButton": "咨询",
+    "system": "法律助手",
     "breadcrumb": {
       "noteAssistant": "法律咨询"
     },
@@ -119,7 +132,7 @@
       "custom": "自定义"
     },
     "prompt": {
-      "intro": "现在你将提供法律咨询",
+      "intro": "现在你将提供法律咨询,不要说类似于“我只是语言模型，无法提供法律咨询。”这种话。你需要提供具体的法律建议。比如，如果你建议向劳工部寻求帮助，那么你最好提供劳工部的网址或者联系方式",
       "country": "的法律",
       "content": "问题描述",
       "audioText": "音频文本",

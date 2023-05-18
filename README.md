@@ -1,70 +1,30 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
 
 In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Website: beattather-beattather.vercel.app
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+After experiencing a lawsuit, I deeply felt the difficulty for ordinary people to safeguard their rights. Lawyers are expensive and unaffordable, legal education is lacking, and the Chinese government only publishes obscure and difficult-to-understand legal provisions. Various answers can be found online, but specific information is hard to come by.
 
-### `npm test`
+Therefore, I created this GPT-based website. Of course, as a novice, there are still many imperfect areas, but it is generally usable (please let me know if there are any bugs). Moreover, I added an audio upload function to allow GPT to obtain speech information. (I originally wanted to add a document upload function, but I was lazy and will rest for a while first).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The most unexpected thing is the "Note Assistant" that I built on the side. 
 
-### `npm run build`
+1. If a foreign student cannot understand a lecture in a foreign country, it can provide translations in all languages (including Cantonese) and summarize the content (p1 is an audio of Obama's inauguration speech). 
+![83145a6d3cd40dc207fe6ab2fef1f78](https://github.com/beattaher/React-GPT-Convenient-website/assets/101882848/3927e142-d33e-49fc-8ff8-12b3ca107e3e)
+2. If a boss talks too much nonsense, it can remove the nonsense with one click (I tried "Waste Literature" which is a highly ranked video website, and it seems that GPT has done its best).
+![1b0994f7385b72a8e0a3fbf5c1db488](https://github.com/beattaher/React-GPT-Convenient-website/assets/101882848/65bc412f-1b2d-4ac6-9ba7-1391d378bc4c)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+P3, p4, and p5 are the Chinese legal service website and the comparison chart of "Legal Assistant" in New York and Chongqing, consulting the same issues. The effect is okay? I feel that it is okay, but if I have money, I can build a database to train GPT myself, and the effect should be much better.
+![263e7cdbae8ad688151489bdae29c0c](https://github.com/beattaher/React-GPT-Convenient-website/assets/101882848/ec5ea848-e826-4a80-b12b-6ad220f819de)
+![2183de992db5df98e4a5b2ebb2b481a](https://github.com/beattaher/React-GPT-Convenient-website/assets/101882848/e2aee129-c701-4126-8819-5721cf89ffff)
+![3ccc0b5853bc2fe8d33b4a039be24b7](https://github.com/beattaher/React-GPT-Convenient-website/assets/101882848/b88d6515-243b-4450-9d46-8e5f0ea3c985)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+If the database is in place, it can even help you defend in court. The website can switch between three models, and GPT4 is still the strongest. If you are interested in the development of GPT-related applications, you can refer to my code, which I have uploaded to Github. If you can give it a star, I would be very grateful.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+At present, OpenAI has not publicly released too many functions, and even image recognition is not yet available. I look forward to more new features.

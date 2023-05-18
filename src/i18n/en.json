@@ -131,7 +131,7 @@
       "result": "Possible Results"
     },
     "prompt": {
-      "intro": "Now you will provide legal advice, don't say something like 'I'm just a language model and can't provide legal advice.' That kind of talk. You need to provide specific legal advice. For example, if you're referring to the Department of Labor for help, provide the department's Web site or contact information",
+      "intro": "Now I want you to be a lawyer to provide legal advice, don't say something like 'I'm just a language model and can't provide legal advice.'  You need to provide specific legal advice. For example, if you're referring to the Department of Labor for help, provide the department's Web site or contact information",
       "country": "Law of",
       "content": "Problem Description",
       "audioText": "Audio Text",
